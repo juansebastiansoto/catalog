@@ -35,6 +35,9 @@ tests/_support/_generated
 #vagrant folder
 /.vagrant
 
+# Configuración de la base de datos
+/config/db.php
+
 # Directorios del framework
 /assets
 /mail
