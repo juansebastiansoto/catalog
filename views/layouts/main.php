@@ -43,14 +43,22 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => '@w
 
         $navItem = [
             ['label' => 'Inicio', 'url' => ['/site/index']],
-            ['label' => 'Acerca de', 'url' => ['/site/about']],
-            ['label' => 'Contacto', 'url' => ['/site/contact']],
+            ['label' => 'Acerca de', 'url' => ['/site/about']]
+        ];
+
+        $templateNav = [
+            'label' => 'Plantillas',
+            'items' => [
+                ['label' => 'Propiedades', 'url' => ['/propertytemplate/index']],
+                ['label' => 'Clientes', 'url' => ['/customer/index']],
+            ],
         ];
 
         if (Yii::$app->user->isGuest) {
             array_push($navItem, ['label' => 'Ingresar', 'url' => ['/site/login']], ['label' => 'Registrarse', 'url' => ['/site/register']]);
         } else {
             array_push($navItem, '<li class="nav-item">' . Html::beginForm(['/site/logout']) . Html::submitButton('Salir (' . Yii::$app->user->identity->username . ')', ['class' => 'nav-link btn btn-link logout']) . Html::endForm() . '</li>');
+            array_push($navItem, $templateNav);
         }
 
         echo Nav::widget([
@@ -64,7 +72,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => '@w
     <main id="main" class="flex-shrink-0" role="main">
         <div class="container">
             <?php if (!empty($this->params['breadcrumbs'])): ?>
-            <?= Breadcrumbs::widget(['links' => $this->params['breadcrumbs']]) ?>
+            <?= Breadcrumbs::widget(['links'=> $this->params['breadcrumbs']]) ?>
                 <?php endif ?>
                 <?= Alert::widget() ?>
                     <?= $content ?>
