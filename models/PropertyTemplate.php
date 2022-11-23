@@ -12,7 +12,6 @@ use Yii;
  * @property string $valueType Tipo de valor
  * @property string $options Valores admitidos
  *
- * @property Property[] $properties
  */
 class PropertyTemplate extends \yii\db\ActiveRecord
 {
@@ -48,16 +47,6 @@ class PropertyTemplate extends \yii\db\ActiveRecord
             'valueType' => 'Tipo de valor',
             'options' => 'Valores admitidos',
         ];
-    }
-
-    /**
-     * Gets query for [[Properties]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getProperties()
-    {
-        return $this->hasMany(Property::class, ['tempate' => 'id']);
     }
 
     public function beforeSave($insert)

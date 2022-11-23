@@ -4,15 +4,36 @@
 
 use yii\helpers\Html;
 
-$this->title = 'About';
+$this->title = 'Acerca de';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="site-about">
-    <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>
-        This is the About page. You may modify the following file to customize its content:
-    </p>
+    <table style="width:90%">
+        <tr>
+            <td style="width:60%">
+                <h1>SEMINARIO DE PRÁCTICA DE INFORMÁTICA</h1>
 
-    <code><?= __FILE__ ?></code>
+                <br />
+                <h2 style="text-align:right">Licenciatura en Informática<br />
+                    Sistema Homogeneizador de Materiales<br />
+                </h2>
+                <br />
+                <h3 style="text-align:right">Profesora Ana Carolina Ferreyra<br />
+                    Soto Juan Sebastián<br />
+                    Legajo VINF08459<br />
+                    Aprendizaje Basado en Proyectos<br />
+                    Entregable N° 4<br />
+                </h3>
+                <h2 style="text-align:right">
+                Noviembre 2022               
+                </h2> 
+            </td>
+            <td>
+                <img src="https://i.pinimg.com/originals/f6/94/56/f69456f4593b89590386c81bb8242763.jpg" />
+            </td>
+        </tr>
+    </table>
+
+
 </div>
