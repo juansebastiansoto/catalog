@@ -47,10 +47,10 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => '@w
         ];
 
         $templateNav = [
-            'label' => 'Plantillas',
+            'label' => 'Datos',
             'items' => [
-                ['label' => 'Propiedades', 'url' => ['/propertytemplate/index']],
-                ['label' => 'Clientes', 'url' => ['/customer/index']],
+                ['label' => 'Templates', 'url' => ['/template/index']],
+                ['label' => 'Materiales', 'url' => ['/material/index']],
             ],
         ];
 
