@@ -33,7 +33,7 @@ class TemplateProperties extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['property', 'name', 'valueType', 'options'], 'required'],
+            [['name', 'valueType'], 'required'],
             [['options'], 'string'],
             [['id', 'property'], 'string', 'max' => 36],
             [['name'], 'string', 'max' => 30],

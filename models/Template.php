@@ -68,4 +68,14 @@ class Template extends \yii\db\ActiveRecord
     {
         return $this->hasMany(TemplateProperties::class, ['id' => 'id']);
     }
+
+    public function beforeSave($insert) {
+        
+        if ($insert) {
+            $this->id = Yii::$app->myClass->guidv4();
+        }
+
+        return parent::beforeSave($insert);
+    }
+
 }
