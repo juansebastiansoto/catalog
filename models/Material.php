@@ -4,6 +4,10 @@ namespace app\models;
 
 use Yii;
 
+use app\models\MaterialProperties;
+use app\models\Template;
+use app\models\TemplateProperties;
+
 /**
  * This is the model class for table "material".
  *
@@ -78,4 +82,39 @@ class Material extends \yii\db\ActiveRecord
         return parent::beforeSave($insert);
     }
     
+    public function generateName($properties) {
+
+        $template = Template::findOne($this->template);
+        $templateProperties = TemplateProperties::findAll($template);
+        $i = 0;
+
+        $name = $template->namePattern;
+
+        foreach($properties as $property) {
+
+            $i++;
+            $value = false;
+
+            foreach($templateProperties as $templateProperty) {
+
+                if ($templateProperty->property === $property->template) {
+
+                    $value = $templateProperty->shortname . $property->value;
+
+                }
+
+            }
+
+            if ($value) {
+
+                $replace = '{p' . $i . '}';
+                $name = str_replace($replace, $value, $name);
+
+            }
+
+        }
+
+        return $name;
+    }
+
 }

@@ -88,6 +88,8 @@ class MaterialController extends Controller
 
                     $transaction = \Yii::$app->db->beginTransaction();
 
+                    $model->name = $model->generateName($modelProperties);
+
                     if ($flag = $model->save(false)) {
                         foreach ($modelProperties as $property) {
                             $property->id = $model->id;
