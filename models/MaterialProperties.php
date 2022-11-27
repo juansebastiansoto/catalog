@@ -72,7 +72,7 @@ class MaterialProperties extends \yii\db\ActiveRecord
      */
     public function getTemplate0()
     {
-        return $this->hasOne(TemplateProperties::class, ['id' => 'template']);
+        return $this->hasOne(TemplateProperties::class, ['property' => 'template']);
     }
 
     public function beforeSave($insert)

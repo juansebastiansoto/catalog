@@ -2,6 +2,14 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use yii\grid\GridView;
+
+use app\models\MaterialPropertiesSearch;
+
+/* Datos de posición */
+$searchModel = new MaterialPropertiesSearch();
+$searchModel->id = $model->id;
+$dataProvider = $searchModel->search(['id' => $model->id]);
 
 /** @var yii\web\View $this */
 /** @var app\models\Material $model */
@@ -34,5 +42,21 @@ $this->params['breadcrumbs'][] = $this->title;
             'name',
         ],
     ]) ?>
+
+</div>
+
+<div class="bill-pos-index">
+
+    <?=
+    GridView::widget([
+        'dataProvider' => $dataProvider,
+        'columns' => [
+            ['class' => 'yii\grid\SerialColumn'],
+            'template0.name',
+            'value',
+            //['class' => 'yii\grid\ActionColumn'],
+        ],
+    ]);
+    ?>
 
 </div>

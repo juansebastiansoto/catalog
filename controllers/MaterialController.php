@@ -131,6 +131,10 @@ class MaterialController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $modelProperties = [new MaterialProperties];
+
+        $modelProperties = MaterialProperties::findall($model->id);
+
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -138,6 +142,7 @@ class MaterialController extends Controller
 
         return $this->render('update', [
             'model' => $model,
+            'modelProperties' => (empty($modelProperties)) ? [new MaterialProperties] : $modelProperties
         ]);
     }
 

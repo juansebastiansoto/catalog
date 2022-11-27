@@ -17,7 +17,7 @@ class MaterialPropertiesSearch extends MaterialProperties
     public function rules()
     {
         return [
-            [['id', 'property', 'tempate', 'value'], 'safe'],
+            [['id', 'property', 'template', 'value'], 'safe'],
         ];
     }
 
@@ -58,7 +58,7 @@ class MaterialPropertiesSearch extends MaterialProperties
         // grid filtering conditions
         $query->andFilterWhere(['like', 'id', $this->id])
             ->andFilterWhere(['like', 'property', $this->property])
-            ->andFilterWhere(['like', 'tempate', $this->tempate])
+            ->andFilterWhere(['like', 'template', $this->template])
             ->andFilterWhere(['like', 'value', $this->value]);
 
         return $dataProvider;

@@ -21,7 +21,7 @@ $valueTypes = ArrayHelper::map(ValueTypes::find()->all(), 'id', 'name');
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'namePattern')->textarea(['rows' => 6]) ?>
+    <?= $form->field($model, 'namePattern')->textInput(['maxlength' => true]) ?>
 
     <div class="panel panel-default">
         <div class="panel-heading">
