@@ -50,7 +50,7 @@ class MaterialProperties extends \yii\db\ActiveRecord
         return [
             'id' => 'ID del material',
             'property' => 'ID de la propiedad',
-            'template' => 'ID del template de la propiedad',
+            'template' => 'Propiedad',
             'value' => 'Valor de la propiedad',
         ];
     }

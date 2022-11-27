@@ -49,7 +49,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => '@w
         $templateNav = [
             'label' => 'Datos',
             'items' => [
-                ['label' => 'Templates', 'url' => ['/template/index']],
+                ['label' => 'Plantillas', 'url' => ['/template/index']],
                 ['label' => 'Materiales', 'url' => ['/material/index']],
             ],
         ];

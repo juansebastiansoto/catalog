@@ -1,7 +1,7 @@
 <?php
 
 use yii\helpers\Html;
-use yii\widgets\ActiveForm;
+use yii\bootstrap5\ActiveForm;
 use yii\helpers\ArrayHelper;
 use wbraganca\dynamicform\DynamicFormWidget;
 use app\models\Template;
@@ -96,7 +96,7 @@ $properties = ArrayHelper::map(TemplateProperties::find()->where(['id' => $templ
     <br />
 
     <div class="form-group">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton('Grabar', ['class' => 'btn btn-success']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

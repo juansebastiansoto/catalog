@@ -44,7 +44,7 @@ class Template extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID del template',
-            'name' => 'Nombre del template',
+            'name' => 'Nombre de la plantilla',
             'namePattern' => 'Patrón de nombrado',
         ];
     }

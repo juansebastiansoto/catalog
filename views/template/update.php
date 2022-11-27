@@ -5,10 +5,10 @@ use yii\helpers\Html;
 /** @var yii\web\View $this */
 /** @var app\models\Template $model */
 
-$this->title = 'Update Template: ' . $model->name;
-$this->params['breadcrumbs'][] = ['label' => 'Templates', 'url' => ['index']];
+$this->title = 'Actualizar plantilla: ' . $model->name;
+$this->params['breadcrumbs'][] = ['label' => 'Plantillas', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->params['breadcrumbs'][] = 'Actualizar';
 ?>
 <div class="template-update">
 

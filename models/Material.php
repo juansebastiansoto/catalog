@@ -48,7 +48,7 @@ class Material extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID del Material',
-            'template' => 'Template utilizado',
+            'template' => 'Plantilla utilizada',
             'name' => 'Nombre',
         ];
     }

@@ -10,7 +10,7 @@ use yii\grid\GridView;
 /** @var app\models\TemplateSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Templates';
+$this->title = 'Plantillas';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="template-index">
@@ -18,7 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Create Template', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Crear plantilla', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
