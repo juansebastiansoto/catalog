@@ -80,6 +80,8 @@ class MaterialController extends Controller
                 $modelProperties = Model::createMultiple(MaterialProperties::classname());
                 Model::loadMultiple($modelProperties, $this->request->post());
 
+                $model->name = $model->generateName($modelProperties);
+                
                 // validate all models
                 $valid = $model->validate();
                 $valid = Model::validateMultiple($modelProperties) && $valid;
@@ -87,8 +89,6 @@ class MaterialController extends Controller
                 if ($valid) {
 
                     $transaction = \Yii::$app->db->beginTransaction();
-
-                    $model->name = $model->generateName($modelProperties);
 
                     if ($flag = $model->save(false)) {
                         foreach ($modelProperties as $property) {

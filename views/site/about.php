@@ -12,14 +12,12 @@ $this->params['breadcrumbs'][] = $this->title;
     <table style="width:90%">
         <tr>
             <td style="width:60%">
-                <h1>SEMINARIO DE PRÁCTICA DE INFORMÁTICA</h1>
+                <h2>SEMINARIO DE PRÁCTICA DE INFORMÁTICA</h2>
 
                 <br />
-                <h2 style="text-align:right">Licenciatura en Informática<br />
+                <h3 style="text-align:right">Licenciatura en Informática<br />
                     Sistema Homogeneizador de Materiales<br />
-                </h2>
                 <br />
-                <h3 style="text-align:right">Profesora Ana Carolina Ferreyra<br />
                     Soto Juan Sebastián<br />
                     Legajo VINF08459<br />
                     Aprendizaje Basado en Proyectos<br />

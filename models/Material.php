@@ -73,16 +73,18 @@ class Material extends \yii\db\ActiveRecord
         return $this->hasOne(Template::class, ['id' => 'template']);
     }
 
-    public function beforeSave($insert) {
-        
+    public function beforeSave($insert)
+    {
+
         if ($insert) {
             $this->id = Yii::$app->myClass->guidv4();
         }
 
-        return parent::beforeSave($insert);
+        return parent::beforeSave($insert) && $this->validateDuplicated();
     }
-    
-    public function generateName($properties) {
+
+    public function generateName($properties)
+    {
 
         $template = Template::findOne($this->template);
         $templateProperties = TemplateProperties::findAll($template);
@@ -90,31 +92,38 @@ class Material extends \yii\db\ActiveRecord
 
         $name = $template->namePattern;
 
-        foreach($properties as $property) {
+        foreach ($properties as $property) {
 
             $i++;
             $value = false;
 
-            foreach($templateProperties as $templateProperty) {
+            foreach ($templateProperties as $templateProperty) {
 
                 if ($templateProperty->property === $property->template) {
 
                     $value = $templateProperty->shortname . $property->value;
-
                 }
-
             }
 
             if ($value) {
 
                 $replace = '{p' . $i . '}';
                 $name = str_replace($replace, $value, $name);
-
             }
-
         }
 
         return $name;
     }
 
+    protected function validateDuplicated()
+    {
+        $materiales = Material::find()->where(['name' => $this->name])->exists();
+
+        if ($materiales) {
+            $this->addError('name', "Ya existe el material $this->name");
+            return false;
+        } else {
+            return true;
+        }
+    }
 }
