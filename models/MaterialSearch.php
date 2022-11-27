@@ -4,12 +4,12 @@ namespace app\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\TemplateProperties;
+use app\models\Material;
 
 /**
- * TemplatePropertiesSearch represents the model behind the search form of `app\models\TemplateProperties`.
+ * modelsMaterialSearch represents the model behind the search form of `app\models\Material`.
  */
-class TemplatePropertiesSearch extends TemplateProperties
+class MaterialSearch extends Material
 {
     /**
      * {@inheritdoc}
@@ -17,7 +17,7 @@ class TemplatePropertiesSearch extends TemplateProperties
     public function rules()
     {
         return [
-            [['id', 'property', 'name', 'shortname', 'valueType', 'options'], 'safe'],
+            [['id', 'template', 'name'], 'safe'],
         ];
     }
 
@@ -39,7 +39,7 @@ class TemplatePropertiesSearch extends TemplateProperties
      */
     public function search($params)
     {
-        $query = TemplateProperties::find();
+        $query = Material::find();
 
         // add conditions that should always apply here
 
@@ -57,11 +57,8 @@ class TemplatePropertiesSearch extends TemplateProperties
 
         // grid filtering conditions
         $query->andFilterWhere(['like', 'id', $this->id])
-            ->andFilterWhere(['like', 'property', $this->property])
-            ->andFilterWhere(['like', 'name', $this->name])
-            ->andFilterWhere(['like', 'shortname', $this->shortname])
-            ->andFilterWhere(['like', 'valueType', $this->valueType])
-            ->andFilterWhere(['like', 'options', $this->options]);
+            ->andFilterWhere(['like', 'template', $this->template])
+            ->andFilterWhere(['like', 'name', $this->name]);
 
         return $dataProvider;
     }

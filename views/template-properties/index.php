@@ -32,6 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'property',
             'name',
+            'shortname',
             'valueType',
             'options:ntext',
             [

@@ -37,6 +37,7 @@ class TemplateProperties extends \yii\db\ActiveRecord
             [['options'], 'string'],
             [['id', 'property'], 'string', 'max' => 36],
             [['name'], 'string', 'max' => 30],
+            [['shortname'], 'string', 'max' => 6],
             [['valueType'], 'string', 'max' => 1],
             [['id', 'property'], 'unique', 'targetAttribute' => ['id', 'property']],
             [['id'], 'exist', 'skipOnError' => true, 'targetClass' => Template::class, 'targetAttribute' => ['id' => 'id']],
@@ -50,9 +51,10 @@ class TemplateProperties extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID de la propiedad en el template',
+            'id' => 'ID del Template',
             'property' => 'ID de la propiedad',
             'name' => 'Nombre de la propiedad',
+            'shortname' => 'Texto para el nombre',
             'valueType' => 'Tipo de valor',
             'options' => 'Valores admitidos',
         ];
@@ -87,4 +89,15 @@ class TemplateProperties extends \yii\db\ActiveRecord
     {
         return $this->hasOne(ValueTypes::class, ['id' => 'valueType']);
     }
+
+    public function beforeSave($insert) {
+        
+        // Paso el texto a un array, lo ordeno y lo vuelvo a pasar a texto              
+        $options = explode("\n", $this->options);
+        sort($options, SORT_STRING);
+        $this->options = implode($options);
+
+        return parent::beforeSave($insert);
+    }  
+    
 }

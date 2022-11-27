@@ -30,10 +30,9 @@ class Material extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id', 'template', 'name'], 'required'],
+            [['template'], 'required'],
             [['id', 'template'], 'string', 'max' => 36],
             [['name'], 'string', 'max' => 60],
-            [['id'], 'unique'],
             [['template'], 'exist', 'skipOnError' => true, 'targetClass' => Template::class, 'targetAttribute' => ['template' => 'id']],
         ];
     }
@@ -69,4 +68,14 @@ class Material extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Template::class, ['id' => 'template']);
     }
+
+    public function beforeSave($insert) {
+        
+        if ($insert) {
+            $this->id = Yii::$app->myClass->guidv4();
+        }
+
+        return parent::beforeSave($insert);
+    }
+    
 }

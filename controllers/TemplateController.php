@@ -7,6 +7,8 @@ use app\models\TemplateSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\ServerErrorHttpException;
+
 
 use app\models\TemplateProperties;
 use app\models\Model;
@@ -79,40 +81,36 @@ class TemplateController extends Controller
 
                 $modelProperties = Model::createMultiple(TemplateProperties::classname());
                 Model::loadMultiple($modelProperties, $this->request->post());
-    
+
                 // validate all models
                 $valid = $model->validate();
                 $valid = Model::validateMultiple($modelProperties) && $valid;
 
                 if ($valid) {
                     $transaction = \Yii::$app->db->beginTransaction();
-                    try {
-                        if ($flag = $model->save(false)) {
-                            foreach ($modelProperties as $property) {
-                                $property->id = $model->id;
-                                $property->property = \Yii::$app->myClass->guidv4();
-                                if (!($flag = $property->save(false))) {
-                                    $transaction->rollBack();
-                                    break;
-                                }
+
+                    if ($flag = $model->save(false)) {
+                        foreach ($modelProperties as $property) {
+                            $property->id = $model->id;
+                            $property->property = \Yii::$app->myClass->guidv4();
+                            if (!($flag = $property->save(false))) {
+                                $transaction->rollBack();
+                                break;
                             }
                         }
-    
-                        if ($flag) {
-                            $transaction->commit();
-                            return $this->redirect(['view', 'id' => $model->id]);
-                        }
-                        
-                    } catch (Exception $e) {
-                        $transaction->rollBack();
                     }
+
+                    if ($flag) {
+                        $transaction->commit();
+                        return $this->redirect(['view', 'id' => $model->id]);
+                    }
+
                 } else {
                     return $this->render('create', [
-                                'model' => $model,
-                                'modelsBillPos' => (empty($modelProperties)) ? [new TemplateProperties] : $modelProperties
+                        'model' => $model,
+                        'modelProperties' => (empty($modelProperties)) ? [new TemplateProperties] : $modelProperties
                     ]);
                 }
-
             }
         } else {
             $model->loadDefaultValues();

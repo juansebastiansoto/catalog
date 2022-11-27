@@ -3,7 +3,7 @@
 namespace app\controllers;
 
 use app\models\MaterialProperties;
-use app\modelsMaterialPropertiesSearch;
+use app\models\MaterialPropertiesSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -38,7 +38,7 @@ class MaterialPropertiesController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new modelsMaterialPropertiesSearch();
+        $searchModel = new MaterialPropertiesSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [

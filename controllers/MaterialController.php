@@ -3,7 +3,7 @@
 namespace app\controllers;
 
 use app\models\Material;
-use app\modelsMaterialSearch;
+use app\models\MaterialSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -11,6 +11,10 @@ use yii\filters\VerbFilter;
 /**
  * MaterialController implements the CRUD actions for Material model.
  */
+
+use app\models\MaterialProperties;
+use app\models\Model;
+
 class MaterialController extends Controller
 {
     /**
@@ -38,7 +42,7 @@ class MaterialController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new modelsMaterialSearch();
+        $searchModel = new MaterialSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
@@ -68,10 +72,44 @@ class MaterialController extends Controller
     public function actionCreate()
     {
         $model = new Material();
+        $modelProperties = [new MaterialProperties];
 
         if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+            if ($model->load($this->request->post())) {
+
+                $modelProperties = Model::createMultiple(MaterialProperties::classname());
+                Model::loadMultiple($modelProperties, $this->request->post());
+
+                // validate all models
+                $valid = $model->validate();
+                $valid = Model::validateMultiple($modelProperties) && $valid;
+
+                if ($valid) {
+
+                    $transaction = \Yii::$app->db->beginTransaction();
+
+                    if ($flag = $model->save(false)) {
+                        foreach ($modelProperties as $property) {
+                            $property->id = $model->id;
+                            $property->property = \Yii::$app->myClass->guidv4();
+                            if (!($flag = $property->save(false))) {
+                                $transaction->rollBack();
+                                break;
+                            }
+                        }
+                    }
+
+                    if ($flag) {
+                        $transaction->commit();
+                        return $this->redirect(['view', 'id' => $model->id]);
+                    }
+                } else {
+
+                    return $this->render('create', [
+                        'model' => $model,
+                        'modelProperties' => (empty($modelProperties)) ? [new MaterialProperties] : $modelProperties
+                    ]);
+                }
             }
         } else {
             $model->loadDefaultValues();
@@ -79,6 +117,7 @@ class MaterialController extends Controller
 
         return $this->render('create', [
             'model' => $model,
+            'modelProperties' => (empty($modelProperties)) ? [new MaterialProperties] : $modelProperties
         ]);
     }
 
