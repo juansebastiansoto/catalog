@@ -117,7 +117,7 @@ class Material extends \yii\db\ActiveRecord
 
     protected function validateDuplicated()
     {
-        $materiales = Material::find()->where(['name' => $this->name])->exists();
+        $materiales = Material::find()->where(['name' => $this->name])->andWhere(['<>', 'id', $this->id])->exists();
 
         if ($materiales) {
             $this->addError('name', "Ya existe el material $this->name");

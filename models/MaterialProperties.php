@@ -35,7 +35,7 @@ class MaterialProperties extends \yii\db\ActiveRecord
         return [
             [['template', 'value'], 'required'],
             [['id', 'property', 'template'], 'string', 'max' => 36],
-            [['value'], 'string', 'max' => 60],
+            [['property', 'value'], 'string', 'max' => 60],
             [['id', 'property'], 'unique', 'targetAttribute' => ['id', 'property']],
             [['id'], 'exist', 'skipOnError' => true, 'targetClass' => Material::class, 'targetAttribute' => ['id' => 'id']],
             //[['template'], 'exist', 'skipOnError' => true, 'targetClass' => TemplateProperties::class, 'targetAttribute' => ['template' => 'id']],

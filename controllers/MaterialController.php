@@ -81,7 +81,7 @@ class MaterialController extends Controller
                 Model::loadMultiple($modelProperties, $this->request->post());
 
                 $model->name = $model->generateName($modelProperties);
-                
+
                 // validate all models
                 $valid = $model->validate();
                 $valid = Model::validateMultiple($modelProperties) && $valid;
@@ -137,9 +137,46 @@ class MaterialController extends Controller
 
         $modelProperties = MaterialProperties::findall($model->id);
 
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post())) {
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+                $modelProperties = Model::createMultiple(MaterialProperties::classname());
+                Model::loadMultiple($modelProperties, $this->request->post());
+
+                $model->name = $model->generateName($modelProperties);
+
+                // validate all models
+                $valid = $model->validate();
+                $valid = Model::validateMultiple($modelProperties) && $valid;
+
+                if ($valid) {
+
+                    $transaction = \Yii::$app->db->beginTransaction();
+
+                    if ($flag = $model->save(false)) {
+                        MaterialProperties::deleteAll(['id' => $model->id]);
+                        foreach ($modelProperties as $property) {
+                            $property->id = $model->id;
+                            $property->property = \Yii::$app->myClass->guidv4();
+                            if (!($flag = $property->save(false))) {
+                                $transaction->rollBack();
+                                break;
+                            }
+                        }
+                    }
+
+                    if ($flag) {
+                        $transaction->commit();
+                        return $this->redirect(['view', 'id' => $model->id]);
+                    }
+                } else {
+
+                    return $this->render('create', [
+                        'model' => $model,
+                        'modelProperties' => (empty($modelProperties)) ? [new MaterialProperties] : $modelProperties
+                    ]);
+                }
+            }
         }
 
         return $this->render('update', [
